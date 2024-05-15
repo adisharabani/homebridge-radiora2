@@ -444,6 +444,16 @@
 								"functionBody": "return !model.windowcoverings[arrayIndices].exclude;"
 							}
 						},
+						"estimatedTime": {
+							"title": "Estimated time for window to fully open",
+							"type": "integer",
+							"required": false
+						}, 
+						"keypadHookData": {
+							"title": "Optional to invoke motor when keypad is pressed (for better estimations)",
+							"type": "string", 
+							"required": false
+						}, 
 						"exclude": {
 							"title": "Exclude from HomeKit",
 							"type": "boolean",
@@ -860,7 +870,9 @@
 						"windowcoverings[].blind",
 						"windowcoverings[].id",
 						"windowcoverings[].serial",
-						"windowcoverings[].model"
+						"windowcoverings[].model",
+						"windowcoverings[].estimatedTime",
+						"windowcoverings[].keypadHookData"
 					]
 				}
 			]

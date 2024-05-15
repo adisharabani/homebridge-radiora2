@@ -3,6 +3,8 @@
 let RadioRa2 = require('./lib/radiora2');
 const util = require('util');
 const logger = require("./lib/logger");
+const path = require('path')
+const storage = require('node-persist');
 let FanAccessory = require('./lib/accessories/fan');
 let LightbulbAccessory = require('./lib/accessories/lightbulb');
 let OccupancySensorAccessory = require('./lib/accessories/occupancysensor');
@@ -49,6 +51,13 @@ class RadioRA2Platform {
         this.api = api;
         this.accessories = {};
         this.log = new logger.Logger(log, this.config.debug, this.config.rawMode);
+        this.storage = storage;
+
+        this.storage.init({
+                dir: path.join(this.api.user.persistPath(), '/../radiora2'),
+                forgiveParseErrors: true
+        })
+
 
         this.setupListeners();
     }
@@ -279,7 +288,7 @@ class RadioRA2Platform {
                             this.api.registerPlatformAccessories("homebridge-radiora2", "RadioRA2", [accessory]);
                             deviceAccessory = accessory;
                         }
-                        this.accessories[uuid] = new WindowCoveringAccessory(this.log, deviceConfig, (deviceAccessory instanceof WindowCoveringAccessory ? deviceAccessory.accessory : deviceAccessory), this.radiora2, Homebridge);
+                        this.accessories[uuid] = new WindowCoveringAccessory(this.log, deviceConfig, (deviceAccessory instanceof WindowCoveringAccessory ? deviceAccessory.accessory : deviceAccessory), this.radiora2, Homebridge, this.storage);
                         this.accessories[uuid].existsInConfig = true;
                         this.log.debug("Loaded " + deviceType + " '" + deviceConfig.name + "'");
                     }
