@@ -41,6 +41,214 @@
 				"type": "boolean",
 				"required":false
 			},
+			"sysvars": {
+				"type": "array",
+				"required": false,
+				"items": {
+					"type": "object",
+					"properties": {
+						"id": {
+							"title": "System Variable ID",
+							"type": "integer",
+							"required": true,
+							"condition": {
+								"functionBody": "return !model.sysvars[arrayIndices].exclude;"
+							}
+						},
+						"name": {
+							"title": "Name",
+							"type": "string",
+							"required": true,
+							"condition": {
+								"functionBody": "return !model.sysvars[arrayIndices].exclude;"
+							}
+						},
+						"serial": {
+							"title": "Serial Number",
+							"type": "string",
+							"required": false,
+							"condition": {
+								"functionBody": "return !model.sysvars[arrayIndices].exclude;"
+							}
+						},
+						"model": {
+							"title": "Model",
+							"type": "string",
+							"required": false,
+							"condition": {
+								"functionBody": "return !model.sysvars[arrayIndices].exclude;"
+							}
+						},
+						"exclude": {
+							"title": "Exclude from HomeKit",
+							"type": "boolean",
+							"required": false
+						}
+					}
+				}
+			},
+			"locks": {
+				"type": "array",
+				"required": false,
+				"items": {
+					"type": "object",
+					"properties": {
+						"id": {
+							"title": "Device Integration ID",
+							"type": "integer",
+							"required": true,
+							"condition": {
+								"functionBody": "return !model.locks[arrayIndices].exclude;"
+							}
+						},
+						"name": {
+							"title": "Name",
+							"type": "string",
+							"required": true,
+							"condition": {
+								"functionBody": "return !model.locks[arrayIndices].exclude;"
+							}
+						},
+						"offtimer": {
+							"title": "Off Timer (seconds afterwhich device will turn off)",
+							"type": "integer",
+							"required": false,
+							"condition": {
+								"functionBody": "return !model.locks[arrayIndices].exclude;"
+							}
+						},
+						"serial": {
+							"title": "Serial Number",
+							"type": "string",
+							"required": false,
+							"condition": {
+								"functionBody": "return !model.locks[arrayIndices].exclude;"
+							}
+						},
+						"model": {
+							"title": "Model",
+							"type": "string",
+							"required": false,
+							"condition": {
+								"functionBody": "return !model.locks[arrayIndices].exclude;"
+							}
+						},
+						"exclude": {
+							"title": "Exclude from HomeKit",
+							"type": "boolean",
+							"required": false
+						}
+					}
+				}
+			},
+			"switches": {
+				"type": "array",
+				"required": false,
+				"items": {
+					"type": "object",
+					"properties": {
+						"id": {
+							"title": "Device Integration ID",
+							"type": "integer",
+							"required": true,
+							"condition": {
+								"functionBody": "return !model.switches[arrayIndices].exclude;"
+							}
+						},
+						"name": {
+							"title": "Name",
+							"type": "string",
+							"required": true,
+							"condition": {
+								"functionBody": "return !model.switches[arrayIndices].exclude;"
+							}
+						},
+						"offtimer": {
+							"title": "Off Timer (seconds afterwhich device will turn off)",
+							"type": "integer",
+							"required": false,
+							"condition": {
+								"functionBody": "return !model.switches[arrayIndices].exclude;"
+							}
+						},
+						"serial": {
+							"title": "Serial Number",
+							"type": "string",
+							"required": false,
+							"condition": {
+								"functionBody": "return !model.switches[arrayIndices].exclude;"
+							}
+						},
+						"model": {
+							"title": "Model",
+							"type": "string",
+							"required": false,
+							"condition": {
+								"functionBody": "return !model.switches[arrayIndices].exclude;"
+							}
+						},
+						"exclude": {
+							"title": "Exclude from HomeKit",
+							"type": "boolean",
+							"required": false
+						}
+					}
+				}
+			},
+			"outlets": {
+				"type": "array",
+				"required": false,
+				"items": {
+					"type": "object",
+					"properties": {
+						"id": {
+							"title": "Device Integration ID",
+							"type": "integer",
+							"required": true,
+							"condition": {
+								"functionBody": "return !model.outlets[arrayIndices].exclude;"
+							}
+						},
+						"name": {
+							"title": "Name",
+							"type": "string",
+							"required": true,
+							"condition": {
+								"functionBody": "return !model.outlets[arrayIndices].exclude;"
+							}
+						},
+						"offtimer": {
+							"title": "Off Timer (seconds afterwhich device will turn off)",
+							"type": "integer",
+							"required": false,
+							"condition": {
+								"functionBody": "return !model.outlets[arrayIndices].exclude;"
+							}
+						},
+						"serial": {
+							"title": "Serial Number",
+							"type": "string",
+							"required": false,
+							"condition": {
+								"functionBody": "return !model.outlets[arrayIndices].exclude;"
+							}
+						},
+						"model": {
+							"title": "Model",
+							"type": "string",
+							"required": false,
+							"condition": {
+								"functionBody": "return !model.outlets[arrayIndices].exclude;"
+							}
+						},
+						"exclude": {
+							"title": "Exclude from HomeKit",
+							"type": "boolean",
+							"required": false
+						}
+					}
+				}
+			},
 			"lights": {
 				"type": "array",
 				"required": false,
@@ -462,6 +670,64 @@
 					}
 				}
 			},
+			"garagedoors": {
+				"type": "array",
+				"required": false,
+				"title": "Garage Doors",
+				"items": {
+					"title": "Garage Door",
+					"type": "object",
+					"properties": {
+						"id": {
+							"title": "Device Integration ID",
+							"type": "integer",
+							"required": true,
+							"condition": {
+								"functionBody": "return !model.garagedoors[arrayIndices].exclude;"
+							}
+						},
+						"name": {
+							"title": "Name",
+							"type": "string",
+							"required": true,
+							"condition": {
+								"functionBody": "return !model.garagedoors[arrayIndices].exclude;"
+							}
+						},
+						"serial": {
+							"title": "Serial Number",
+							"type": "string",
+							"required": false,
+							"condition": {
+								"functionBody": "return !model.garagedoors[arrayIndices].exclude;"
+							}
+						},
+						"model": {
+							"title": "Model",
+							"type": "string",
+							"required": false,
+							"condition": {
+								"functionBody": "return !model.garagedoors[arrayIndices].exclude;"
+							}
+						},
+						"estimatedTime": {
+							"title": "Estimated time for window to fully open",
+							"type": "integer",
+							"required": false
+						}, 
+						"keypadHookData": {
+							"title": "Optional to invoke motor when keypad is pressed (for better estimations)",
+							"type": "string", 
+							"required": false
+						}, 
+						"exclude": {
+							"title": "Exclude from HomeKit",
+							"type": "boolean",
+							"required": false
+						}
+					}
+				}
+			},
 			"hvaccontrollers": {
 				"type": "array",
 				"required": false,
@@ -747,6 +1013,66 @@
 			]
 		},
 		{	"type": "fieldset",
+			"title": "Locks",
+			"expandable": true,
+			"expanded": false,
+			"items":[
+				{
+					"key": "locks",
+					"type": "tabarray",
+					"title": "{{ value.name || 'New Lock' }}",
+					"items": [
+						"locks[].exclude",
+						"locks[].name",
+						"locks[].id",
+						"locks[].offtimer",
+						"locks[].serial",
+						"locks[].model"
+					]
+				}
+			]
+		},
+		{	"type": "fieldset",
+			"title": "Switches",
+			"expandable": true,
+			"expanded": false,
+			"items":[
+				{
+					"key": "switches",
+					"type": "tabarray",
+					"title": "{{ value.name || 'New Switch' }}",
+					"items": [
+						"switches[].exclude",
+						"switches[].name",
+						"switches[].id",
+						"switches[].offtimer",
+						"switches[].serial",
+						"switches[].model"
+					]
+				}
+			]
+		},
+		{	"type": "fieldset",
+			"title": "Outlets",
+			"expandable": true,
+			"expanded": false,
+			"items":[
+				{
+					"key": "outlets",
+					"type": "tabarray",
+					"title": "{{ value.name || 'New Outlet' }}",
+					"items": [
+						"outlets[].exclude",
+						"outlets[].name",
+						"outlets[].id",
+						"outlets[].offtimer",
+						"outlets[].serial",
+						"outlets[].model"
+					]
+				}
+			]
+		},
+		{	"type": "fieldset",
 			"title": "Lights",
 			"expandable": true,
 			"expanded": false,
@@ -785,6 +1111,25 @@
 						"fans[].model",
 						"fans[].adjustable",
 						"fans[].onvalue"
+					]
+				}
+			]
+		},
+		{	"type": "fieldset",
+			"title": "Sysvars",
+			"expandable": true,
+			"expanded": false,
+			"items":[
+				{
+					"key": "sysvars",
+					"type": "tabarray",
+					"title": "{{ value.name || 'New System Variable' }}",
+					"items": [
+						"sysvars[].exclude",
+						"sysvars[].name",
+						"sysvars[].id",
+						"sysvars[].serial",
+						"sysvars[].model"
 					]
 				}
 			]
@@ -873,6 +1218,28 @@
 						"windowcoverings[].model",
 						"windowcoverings[].estimatedTime",
 						"windowcoverings[].keypadHookData"
+					]
+				}
+			]
+		},
+		{
+			"type": "fieldset",
+			"title": "Garage Doors",
+			"expandable": true,
+			"expanded": false,
+			"items": [
+				{
+					"key": "garagedoors",
+					"type": "tabarray",
+					"title": "{{ value.name || 'New Garage Door' }}",
+					"items": [
+						"garagedoors[].exclude",
+						"garagedoors[].name",
+						"garagedoors[].id",
+						"garagedoors[].serial",
+						"garagedoors[].model",
+						"garagedoors[].estimatedTime",
+						"garagedoors[].keypadHookData"
 					]
 				}
 			]

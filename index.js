@@ -7,12 +7,17 @@ const path = require('path')
 const storage = require('node-persist');
 let FanAccessory = require('./lib/accessories/fan');
 let LightbulbAccessory = require('./lib/accessories/lightbulb');
+let LockAccessory = require('./lib/accessories/lock');
+let SwitchAccessory = require('./lib/accessories/switch');
+let OutletAccessory = require('./lib/accessories/outlet');
+let SysvarAccessory = require('./lib/accessories/sysvar');
 let OccupancySensorAccessory = require('./lib/accessories/occupancysensor');
 let KeypadButtonStatelessAccessory = require('./lib/accessories/statelessswitch');
 let KeypadButtonAccessory = require('./lib/accessories/keypadbutton');
 let VisorControlReceiverAccessory = require('./lib/accessories/visorcontrolreceiver')
 let ThermostatAccessory = require('./lib/accessories/hvaccontroller');
 let WindowCoveringAccessory = require('./lib/accessories/windowcovering');
+let GarageDoorAccessory = require('./lib/accessories/garagedoor');
 let TemperatureSensorAccessory = require('./lib/accessories/temperaturesensor');
 
 let Homebridge, Accessory, PlatformAccessory, Characteristic, Service, UUIDGen;
@@ -76,6 +81,7 @@ class RadioRA2Platform {
         this.radiora2.on("loggedIn", function () {
 
             this.log.info("Logged in to RadioRA2 Main Repeater at " + repeaterAddress);
+            this.radiora2.sendCommand("#MONITORING, 10, 1");
 
             //////////////////////////
             // Fans
@@ -94,6 +100,123 @@ class RadioRA2Platform {
                             deviceAccessory = accessory;
                         }
                         this.accessories[uuid] = new FanAccessory(this.log, deviceConfig, (deviceAccessory instanceof FanAccessory ? deviceAccessory.accessory : deviceAccessory), this.radiora2, Homebridge);
+                        this.accessories[uuid].existsInConfig = true;
+                        this.log.debug("Loaded " + deviceType + " '" + deviceConfig.name + "'");
+                    }
+                    else {
+                        this.log.warn("Invalid " + deviceType + " in config. Not loading it.");
+                    }
+                }
+            }.bind(this));
+            this.log.info("Loaded " + deviceArray.length + " " + deviceType + "(s)");
+
+            //////////////////////////
+            // Sysvars
+            deviceType = "Sysvar";
+            deviceArray = this.config.sysvars || [];
+            deviceArray.forEach(function (deviceConfig) {
+                if (!deviceConfig.disabled) {
+                    if (deviceConfig.id) {
+                        deviceConfig = addDefaultValues(deviceConfig, deviceType);
+                        var uuid = UUIDGen.generate(deviceType + ":" + deviceConfig.id);
+                        let deviceAccessory = this.accessories[uuid];
+                        if (!deviceAccessory) {
+                            let accessory = new PlatformAccessory(deviceConfig.name, uuid);
+                            let deviceService = accessory.addService(Service.Switch, deviceConfig.name);
+                            //deviceService.addCharacteristic(Characteristic.On);
+                            this.api.registerPlatformAccessories("homebridge-radiora2", "RadioRA2", [accessory]);
+                            deviceAccessory = accessory;
+                            this.log.debug("Created " + deviceType + " '" + deviceConfig.name + "'");
+                        }
+                        this.accessories[uuid] = new SysvarAccessory(this.log, deviceConfig, (deviceAccessory instanceof SysvarAccessory ? deviceAccessory.accessory : deviceAccessory), this.radiora2, Homebridge);
+                        this.accessories[uuid].existsInConfig = true;
+                        this.log.debug("Loaded " + deviceType + " '" + deviceConfig.name + "'");
+                    }
+                    else {
+                        this.log.warn("Invalid " + deviceType + " in config. Not loading it.");
+                    }
+                }
+            }.bind(this));
+            this.log.info("Loaded " + deviceArray.length + " " + deviceType + "(s)");
+
+            //////////////////////////
+            //////////////////////////
+            // Locks
+            deviceType = "lock";
+            deviceArray = this.config.locks || [];
+            deviceArray.forEach(function (deviceConfig) {
+                if (!deviceConfig.disabled) {
+                    if (deviceConfig.id) {
+                        deviceConfig = addDefaultValues(deviceConfig, deviceType);
+                        var uuid = UUIDGen.generate(deviceType + ":" + deviceConfig.id);
+                        let deviceAccessory = this.accessories[uuid];
+                        if (!deviceAccessory) {
+                            let accessory = new PlatformAccessory(deviceConfig.name, uuid);
+                            let deviceService = accessory.addService(Service.LockMechanism, deviceConfig.name);
+                            //deviceService.addCharacteristic(Characteristic.LockCurrentState);
+                            //deviceService.addCharacteristic(Characteristic.LockTargetState);
+                            this.api.registerPlatformAccessories("homebridge-radiora2", "RadioRA2", [accessory]);
+                            deviceAccessory = accessory;
+                            this.log.debug("Created " + deviceType + " '" + deviceConfig.name + "'");
+                        }
+                        this.accessories[uuid] = new LockAccessory(this.log, deviceConfig, (deviceAccessory instanceof LockAccessory ? deviceAccessory.accessory : deviceAccessory), this.radiora2, Homebridge);
+                        this.accessories[uuid].existsInConfig = true;
+                        this.log.debug("Loaded " + deviceType + " '" + deviceConfig.name + "'");
+                    }
+                    else {
+                        this.log.warn("Invalid " + deviceType + " in config. Not loading it.");
+                    }
+                }
+            }.bind(this));
+            this.log.info("Loaded " + deviceArray.length + " " + deviceType + "(s)");
+
+            //////////////////////////
+            // Switches
+            deviceType = "switch";
+            deviceArray = this.config.switches || [];
+            deviceArray.forEach(function (deviceConfig) {
+                if (!deviceConfig.disabled) {
+                    if (deviceConfig.id) {
+                        deviceConfig = addDefaultValues(deviceConfig, deviceType);
+                        var uuid = UUIDGen.generate(deviceType + ":" + deviceConfig.id);
+                        let deviceAccessory = this.accessories[uuid];
+                        if (!deviceAccessory) {
+                            let accessory = new PlatformAccessory(deviceConfig.name, uuid);
+                            let deviceService = accessory.addService(Service.Switch, deviceConfig.name);
+                            this.api.registerPlatformAccessories("homebridge-radiora2", "RadioRA2", [accessory]);
+                            deviceAccessory = accessory;
+                            this.log.debug("Created " + deviceType + " '" + deviceConfig.name + "'");
+                        }
+                        this.accessories[uuid] = new SwitchAccessory(this.log, deviceConfig, (deviceAccessory instanceof SwitchAccessory ? deviceAccessory.accessory : deviceAccessory), this.radiora2, Homebridge);
+                        this.accessories[uuid].existsInConfig = true;
+                        this.log.debug("Loaded " + deviceType + " '" + deviceConfig.name + "'");
+                    }
+                    else {
+                        this.log.warn("Invalid " + deviceType + " in config. Not loading it.");
+                    }
+                }
+            }.bind(this));
+            this.log.info("Loaded " + deviceArray.length + " " + deviceType + "(s)");
+
+            //////////////////////////
+            // Outlets
+            deviceType = "outlet";
+            deviceArray = this.config.outlets || [];
+            deviceArray.forEach(function (deviceConfig) {
+                if (!deviceConfig.disabled) {
+                    if (deviceConfig.id) {
+                        deviceConfig = addDefaultValues(deviceConfig, deviceType);
+                        var uuid = UUIDGen.generate(deviceType + ":" + deviceConfig.id);
+                        let deviceAccessory = this.accessories[uuid];
+                        if (!deviceAccessory) {
+                            let accessory = new PlatformAccessory(deviceConfig.name, uuid);
+                            let deviceService = accessory.addService(Service.Outlet, deviceConfig.name);
+                            deviceService.addCharacteristic(Characteristic.OutletInUse);
+                            this.api.registerPlatformAccessories("homebridge-radiora2", "RadioRA2", [accessory]);
+                            deviceAccessory = accessory;
+                            this.log.debug("Created " + deviceType + " '" + deviceConfig.name + "'");
+                        }
+                        this.accessories[uuid] = new OutletAccessory(this.log, deviceConfig, (deviceAccessory instanceof OutletAccessory ? deviceAccessory.accessory : deviceAccessory), this.radiora2, Homebridge);
                         this.accessories[uuid].existsInConfig = true;
                         this.log.debug("Loaded " + deviceType + " '" + deviceConfig.name + "'");
                     }
@@ -289,6 +412,33 @@ class RadioRA2Platform {
                             deviceAccessory = accessory;
                         }
                         this.accessories[uuid] = new WindowCoveringAccessory(this.log, deviceConfig, (deviceAccessory instanceof WindowCoveringAccessory ? deviceAccessory.accessory : deviceAccessory), this.radiora2, Homebridge, this.storage);
+                        this.accessories[uuid].existsInConfig = true;
+                        this.log.debug("Loaded " + deviceType + " '" + deviceConfig.name + "'");
+                    }
+                    else {
+                        this.log.warn("Invalid " + deviceType + " in config. Not loading it.");
+                    }
+                }
+            }.bind(this));
+            this.log.info("Loaded " + deviceArray.length + " " + deviceType + "(s)");
+
+            //////////////////////////
+            // Garage Doors
+            deviceType = "garage door";
+            deviceArray = this.config.garagedoors || [];
+            deviceArray.forEach(function (deviceConfig) {
+                if (!deviceConfig.disabled) {
+                    if (deviceConfig.id) {
+                        deviceConfig = addDefaultValues(deviceConfig, deviceType);
+                        var uuid = UUIDGen.generate(deviceType + ":" + deviceConfig.id);
+                        let deviceAccessory = this.accessories[uuid];
+                        if (!deviceAccessory) {
+                            let accessory = new PlatformAccessory(deviceConfig.name, uuid);
+                            let deviceService = accessory.addService(Service.GarageDoorOpener, deviceConfig.name);
+                            this.api.registerPlatformAccessories("homebridge-radiora2", "RadioRA2", [accessory]);
+                            deviceAccessory = accessory;
+                        }
+                        this.accessories[uuid] = new GarageDoorAccessory(this.log, deviceConfig, (deviceAccessory instanceof GarageDoorAccessory ? deviceAccessory.accessory : deviceAccessory), this.radiora2, Homebridge, this.storage);
                         this.accessories[uuid].existsInConfig = true;
                         this.log.debug("Loaded " + deviceType + " '" + deviceConfig.name + "'");
                     }
