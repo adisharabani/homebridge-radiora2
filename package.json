@@ -1,7 +1,7 @@
 {
   "name": "homebridge-radiora2",
-  "version": "1.8.0",
-  "description": "Homebridge Platform for Lutron RadioRa2",
+  "version": "1.8.0-adish",
+  "description": "Homebridge Platform for Lutron RadioRa2 (fork of homebridge-radiora2 by @senorshaun)",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,9 +13,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/senorshaun/homebridge-radiora2.git"
+    "url": "git+https://github.com/adisharabani/homebridge-radiora2.git"
   },
-  "author": "SenorShaun",
+  "author": "Adi Sharabani",
+  "contributors": [
+    "SenorShaun (original author, https://github.com/senorshaun/homebridge-radiora2)"
+  ],
   "license": "MIT",
   "dependencies": {
     "@homebridge/plugin-ui-utils": "^0.0.19",

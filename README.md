@@ -2,6 +2,8 @@
 # homebridge-radiora2
 Lutron RadioRA2 plugin for homebridge
 
+> Fork maintained by Adi Sharabani, based on [homebridge-radiora2](https://github.com/senorshaun/homebridge-radiora2) by [@senorshaun](https://github.com/senorshaun). Versions are named after the upstream release they are based on, plus `-adish`.
+
 ## Features
 * Auto detection of all devices
 * Pico integration with press length configuration
