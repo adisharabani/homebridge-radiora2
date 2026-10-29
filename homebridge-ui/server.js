@@ -10,6 +10,8 @@ class UiServer extends HomebridgePluginUiServer {
     super();
 
     this.lights = [];
+    this.outlets = [];
+    this.sysvars = [];
     this.fans = [];
     this.keypads = [];
     this.occupancysensors = [];
@@ -17,6 +19,7 @@ class UiServer extends HomebridgePluginUiServer {
     this.temperaturesensors = [];
     this.visorcontrolreceivers = [];
     this.windowcoverings = [];
+    this.garagedoors = [];
     //this.ccos = [];
     this.onRequest('/get-all-devices', this.getAllDevices.bind(this));
     // this.ready() must be called to let the UI know you are ready to accept api calls
@@ -247,13 +250,16 @@ class UiServer extends HomebridgePluginUiServer {
       return {
         success: true,
         lights: this.lights,
+        outlets: this.outlets,
+        sysvars: this.sysvars,
         fans: this.fans,
         keypads: this.keypads,
         occupancysensors: this.occupancysensors,
         hvaccontrollers: this.hvaccontrollers,
         temperaturesensors: this.temperaturesensors,
         visorcontrolreceivers: this.visorcontrolreceivers,
-        windowcoverings: this.windowcoverings
+        windowcoverings: this.windowcoverings,
+        garagedoors: this.garagedoors
       }
 
     } else {
